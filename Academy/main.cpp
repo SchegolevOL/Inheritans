@@ -2,6 +2,18 @@
 #include<Windows.h>
 #include<string>
 using namespace std;
+
+#define HUMAN_TAKE_PARAMETRS const std::string& last_name,const std::string& first_name,unsigned int age
+#define HUMAN_GIVE_PARAMETRS last_name, first_name, age
+#define STUENT_TAKE_PARAMETRS const std::string& speciality,const std::string& group,double rating,double attendance
+#define STUENT_GIVE_PARAMETRS speciality, group, rating, attendance
+#define TEACHER_TAKE_PARAMETRS const std::string& speciality,unsigned int xperience,double evil
+#define TEACHER_GIVE_PARAMETRS speciality, xperience, evil
+
+
+
+
+
 class Human
 {
 	std::string last_name;
@@ -36,9 +48,7 @@ public:
 	}
 
 	//-------------Constractors----------------
-	Human(	const std::string& last_name,
-			const std::string& first_name,
-			unsigned int age)
+	Human(HUMAN_TAKE_PARAMETRS)
 	{
 		set_last_name(last_name);
 		set_first_name(first_name);
@@ -99,14 +109,9 @@ public:
 		this->attendance = attendance;
 	}
 	//-------------Constractors----------------
-	Stuent(	const std::string& last_name,
-			const std::string& first_name,
-			unsigned int age,
-			const std::string& speciality,
-			const std::string& group,
-			double rating,
-			double attendance)
-			:Human(last_name, first_name, age)
+	Stuent(HUMAN_TAKE_PARAMETRS,
+			STUENT_TAKE_PARAMETRS)
+			:Human(HUMAN_GIVE_PARAMETRS)
 	{
 		set_speciality(speciality);
 		set_group(group);
@@ -158,13 +163,9 @@ public:
 		this->evil = evil;
 	}
 	//-------------Constractors----------------
-	Teacher(const std::string& last_name,
-		const std::string& first_name,
-		unsigned int age,
-		const std::string& speciality,
-		unsigned int xperience,
-		double evil)
-		:Human(last_name, first_name, age)
+	Teacher(HUMAN_TAKE_PARAMETRS,
+		TEACHER_TAKE_PARAMETRS)
+		:Human(HUMAN_GIVE_PARAMETRS)
 	{
 		set_speciality(speciality);
 		set_xperience(xperience);
@@ -196,15 +197,10 @@ public:
 	{
 		this->diplom = diplom;
 	}
-	Graduate(const std::string& last_name,
-		const std::string& first_name,
-		unsigned int age,
-		const std::string& speciality,
-		const std::string& group,
-		double rating,
-		double attendance,
+	Graduate(HUMAN_TAKE_PARAMETRS,
+		STUENT_TAKE_PARAMETRS,
 		const std::string& diplom)
-		:Stuent(last_name, first_name, age, speciality, group, rating, attendance)
+		:Stuent(HUMAN_GIVE_PARAMETRS, STUENT_GIVE_PARAMETRS)
 	{
 		set_diplom(diplom);
 		cout << "GConstructor :\t" << this << endl;
@@ -221,12 +217,15 @@ public:
 
 };
 
-
+#define INHERITANS_CHEK
 
 int main()
 {
+
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+#if def INHERITANS_CHEK
+
 	Human human("Connor", "John", 18);
 	human.print();
 	Stuent stud("Pinkman", "Jessie", 25, "Chmistry", "WW_123", 85, 95);
@@ -235,5 +234,10 @@ int main()
 	techer.print();
 	Graduate grad("Petr", "Petrov", 25, "Chmistry", "WW_456", 96, 100, "ingenering");
 	grad.print();
+#endif // INHERITANS_CHEK
+
+
+
+
 	return 0;
 }
