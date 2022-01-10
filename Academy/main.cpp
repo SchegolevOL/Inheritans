@@ -10,10 +10,6 @@ using namespace std;
 #define TEACHER_TAKE_PARAMETRS const std::string& speciality,unsigned int xperience,double evil
 #define TEACHER_GIVE_PARAMETRS speciality, xperience, evil
 
-
-
-
-
 class Human
 {
 	std::string last_name;
@@ -56,12 +52,12 @@ public:
 		cout << "HConstructor" << this << endl;
 	}
 	//-----------Destructor---------------------
-	~Human()
+	virtual ~Human()
 	{
 		cout << "HDestructor: " << this << endl;
 	}
 	//----------------Methods:--------------------
-	void print()const
+	virtual void print()const
 	{
 		cout << last_name << " " << first_name << "  " << age << " лет" << endl;
 	}
@@ -217,14 +213,14 @@ public:
 
 };
 
-#define INHERITANS_CHEK
+//#define INHERITANS_CHEK
 
 int main()
 {
 
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-#if def INHERITANS_CHEK
+#ifdef INHERITANS_CHEK
 
 	Human human("Connor", "John", 18);
 	human.print();
@@ -236,8 +232,26 @@ int main()
 	grad.print();
 #endif // INHERITANS_CHEK
 
-
-
-
+	//generalisation(up-cast)
+	Human* group[] =
+	{
+		new Stuent("Pinkman", "Jessie", 25, "Chmistry", "WW_123", 85, 95),
+		new Teacher("Ivan","Ivanov",45, "matematika", 1, 1.1),
+		new Graduate("Petr", "Petrov", 25, "Chmistry", "WW_456", 96, 100, "ingenering"),
+		new Teacher("Gena","Frolov",46, "matematika", 1, 1.1),
+		new Stuent("Sara", "Conar", 40, "Chmistry", "WW_145", 84, 96),
+		new Graduate("Kol", "Kolotun", 25, "Chmistry", "WW_456", 96, 100, "ingenering")
+	};
+	cout << "\n------------------------------------------" << endl;
+	for (size_t i = 0; i < sizeof(group)/sizeof(Human*); i++)
+	{
+		cout << typeid(*group[i]).name() << endl;//TRRI - Runtime
+		group[i]->print();
+		cout << "\n------------------------------------------"<<endl;
+	}
+	for (size_t i = 0; i < sizeof(group) / sizeof(Human*); i++)
+	{
+		delete group[i];
+	}
 	return 0;
 }
