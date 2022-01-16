@@ -17,7 +17,7 @@ using std::endl;
 #define PERMANENT_TAKE_PARAMETRS double salary
 #define HAURLY_EMPOLOYEE_GIVE_PARAMETRS rate, hours
 #define HAURLY_EMPOLOYEE_TAKE_PARAMETRS double rate, int hours
-class Human;
+//#define FREND
 
 
 
@@ -69,10 +69,13 @@ public:
 	{
 		cout << last_name << " " << first_name << "  " << age << " лет" << endl;
 	}
-	/*friend ostream& operator << (ostream os, const Human& obj)
+#ifdef FREND
+	friend ostream& operator << (ostream os, const Human& obj)
 	{
 		return os << obj.get_last_name() << obj.get_first_name() << obj.get_age() << endl;
-	}*/
+	}
+#endif // FREND
+
 	virtual string txt()const
 	{
 		char* age_p;		
@@ -122,21 +125,25 @@ public:
 		cout << position;
 		cout << endl;		
 	}
-	/*friend ostream& operator << (ostream os, const Employee& obj)
+#ifdef FREND
+	friend ostream& operator << (ostream os, const Employee& obj)
 	{
-		return os << obj.get_position() << endl;
-	}*/
-	//string txt()const
-	//{
-	//	Human::txt;
-	//	//const size_t size = position.length();
-	//	char bufer[256];
 
-	//	strcpy(bufer, position.c_str());
-	//	strcat(bufer, " \n");
-	//	
-	//	return bufer;
-	//}
+		return os << obj.get_position() << endl;
+	}
+#endif // FREND
+
+	string txt()const
+	{
+		Human::txt;
+		//const size_t size = position.length();
+		char bufer[256];
+
+		strcpy(bufer, position.c_str());
+		strcat(bufer, " \n");
+		
+		return bufer;
+	}
 };
 
 
@@ -173,24 +180,27 @@ public:
 		cout << salary;
 		cout << endl;
 	}
-	/*friend ostream& operator << (ostream os, const PermanentEmployee& obj)
+#ifdef FREND
+	friend ostream& operator << (ostream os, const PermanentEmployee& obj)
 	{
 		return os << obj.get_salary() << endl;
-	}*/
-	//string txt()const
-	//{
-	//	Employee::txt;
-	//	char* salary_p;
-	//	itoa(salary, salary_p, 10);
-	//	string salary_s = (string)salary_p;
-	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-	//	char bufer[256];
+	}
+#endif // FREND
+	
+	string txt()const
+	{
+		Employee::txt;
+		char* salary_p;
+		itoa(salary, salary_p, 10);
+		string salary_s = (string)salary_p;
+		//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
+		char bufer[256];
 
-	//	strcpy(bufer, salary_s.c_str());
-	//	strcat(bufer, " рублей");
-	//	
-	//	return bufer;
-	//}
+		strcpy(bufer, salary_s.c_str());
+		strcat(bufer, " рублей");
+		
+		return bufer;
+	}
 
 };
 
@@ -242,35 +252,38 @@ public:
 		cout <<"“ариф " << rate <<" ,отработано " << hours;
 		cout << endl;
 	}
-	/*friend ostream& operator << (ostream os, const HourlyEmpoloyee& obj)
+#ifdef FREND
+	friend ostream& operator << (ostream os, const HourlyEmpoloyee& obj)
 	{
 		return os << obj.get_rate() << obj.get_hours() << endl;
-	}*/
-	//virtual string txt()const
-	//{
-	//	Employee::txt;
-	//	char* rate_p;
-	//	itoa(rate, rate_p, 10);
-	//	string rate_s = (string)rate_p;
-	//	char* hours_p;
-	//	itoa(hours, hours_p, 10);
-	//	string hours_s = (string)hours_p;
+	}
+#endif // FREND
+	
+	string txt()const
+	{
+		Employee::txt;
+		char* rate_p;
+		itoa(rate, rate_p, 10);
+		string rate_s = (string)rate_p;
+		char* hours_p;
+		itoa(hours, hours_p, 10);
+		string hours_s = (string)hours_p;
 
-	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-	//	char bufer[256];
+		//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
+		char bufer[256];
 
-	//	strcpy(bufer, rate_s.c_str());
-	//	strcat(bufer, " рублей, отработано ");
-	//	strcat(bufer, hours_s.c_str());
-	//	
-	//	strcat(bufer, " часов\n");
-	//	return bufer;
-	//}
+		strcpy(bufer, rate_s.c_str());
+		strcat(bufer, " рублей, отработано ");
+		strcat(bufer, hours_s.c_str());
+		
+		strcat(bufer, " часов\n");
+		return bufer;
+	}
 };
-//ostream& operator << (ostream os, const Human& obj)
-//{
-//	return os << obj.txt() << endl;
-//}
+ostream& operator << (ostream os, const Human& obj)
+{
+	return os << obj.txt() << endl;
+}
 
 
 int main()
@@ -289,7 +302,7 @@ int main()
 	{
 		cout << "\n------------------------------------\n";
 		//department[i]->print();
-		cout << department[i]->txt() << endl;
+		cout << department[i] << endl;
 		total_salary += department[i]->get_salary();
 	}
 	cout << "\n-----------------------------------------\n";
