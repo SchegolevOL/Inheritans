@@ -4,8 +4,8 @@
 
 using namespace std;
 
-#define EMPOLOYEES_TAKE_PARAMETRS const string& first_name, const string& last_name, const string& specialization
-#define EMPOLOYEES_GIVE_PARAMETRS first_name, last_name, specialization
+#define EMPOLOYEE_TAKE_PARAMETRS const string& first_name, const string& last_name, const string& specialization
+#define EMPOLOYEE_GIVE_PARAMETRS first_name, last_name, specialization
 #define PIECEWORKER_TAKE_PARAMETRS const unsigned int& rate, const unsigned int& number_parts
 #define SALARY_TAKE_PARAMETRS double time_worked, unsigned int official_salary
 #define LINE "--------------------------------------------------\n"
@@ -42,7 +42,7 @@ public:
 		this->specialization = specialization;
 	}
 	//-----Construction-----
-	Empoloyees(EMPOLOYEES_TAKE_PARAMETRS)
+	Empoloyees(EMPOLOYEE_TAKE_PARAMETRS)
 	{
 		set_first_name(first_name);
 		set_last_name(last_name);
@@ -86,7 +86,7 @@ public:
 		this->number_parts = number_parts;
 	}
 	//-----Construction-----
-	Pieceworker(EMPOLOYEES_TAKE_PARAMETRS, PIECEWORKER_TAKE_PARAMETRS):Empoloyees(EMPOLOYEES_GIVE_PARAMETRS)
+	Pieceworker(EMPOLOYEE_TAKE_PARAMETRS, PIECEWORKER_TAKE_PARAMETRS):Empoloyees(EMPOLOYEE_GIVE_PARAMETRS)
 	{
 		set_rate(rate);
 		set_number_parts(number_parts);
@@ -128,7 +128,7 @@ public:
 		this->official_salary = official_salary;
 	}
 	//-----Construction-----
-	Salary(EMPOLOYEES_TAKE_PARAMETRS, SALARY_TAKE_PARAMETRS) :Empoloyees(EMPOLOYEES_GIVE_PARAMETRS)
+	Salary(EMPOLOYEE_TAKE_PARAMETRS, SALARY_TAKE_PARAMETRS) :Empoloyees(EMPOLOYEE_GIVE_PARAMETRS)
 	{
 		set_time_worked(time_worked);
 		set_official_salary(official_salary);
