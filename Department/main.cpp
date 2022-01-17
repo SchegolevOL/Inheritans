@@ -70,26 +70,60 @@ public:
 	//----------------Methods:--------------------
 	virtual ostream& print(ostream& os=cout)const
 	{
-		//os.width(10);
+		
 		os << left;
-		os << "--------------------------------\n";
-		os <<"Фамилия : "<< last_name << "\n";
-		//os.width(10);
-		os << "Имя : " << first_name<<"\n";
-		//os.width(3);
-		os << "Возраст : " << age << " лет\n";
+		os.width(20);
+		os << last_name ;
+		os.width(10);
+		os << first_name;
+		os.width(3);
+		os << age << " лет";
 		return os;
 		
 		
 	}
-	virtual istream& print(istream& in)const
+	virtual ofstream& print(ofstream& of)const
 	{
 		
-		in.getline = get_first_name();
-		return in;
+		of << left;
+		of.width(20);
+		of << last_name;
+		of.width(10);
+		of << first_name;
+		of.width(3);
+		of << age;
+		return of;
 
 
 	}
+	
+
+	/*virtual istream& input(istream& in)const
+	{
+		const int size = 256;
+		char buffer[size] = {};
+		in.read(buffer, size);
+		char* number[3] = {};
+		int n = 0;		
+		for (char* pch = strtok(buffer, " "); pch; pch = strtok(NULL, " "))
+		{
+			number[n++] = pch;
+		}
+		
+		switch (n)
+		{
+		case 1:
+			get_last_name(string (number[0]));
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		}
+		return in;
+	}*/
 
 #ifdef FREND
 	friend ostream& operator << (ostream os, const Human& obj)
@@ -147,10 +181,19 @@ public:
 	}
 	ostream&  print(ostream& os)const
 	{
-		Human::print(os);		
-		os<< "Должность : " << position << endl;
+		Human::print(os);
+		os.width(20);
+		os << position;
 		return os;
 	}
+	ofstream& print(ofstream& of)const
+	{
+		Human::print(of);
+		of.width(20);
+		of << position;
+		return of;
+	}
+
 #ifdef FREND
 	friend ostream& operator << (ostream os, const Employee& obj)
 	{
@@ -203,9 +246,20 @@ public:
 	ostream& print(ostream& os)const
 	{
 		Employee::print(os);
-		return os << "Зарплата : " << salary <<" $" << endl;
-		 
+		os.width(10);
+
+		os << salary ;
+		return os;
 	}
+	ofstream& print(ofstream& of)const
+	{
+		Employee::print(of);
+		of.width(20);
+		of << right;
+		of << salary<<" ";
+		return of;
+	}
+
 #ifdef FREND
 	friend ostream& operator << (ostream os, const PermanentEmployee& obj)
 	{
@@ -277,9 +331,24 @@ public:
 	ostream& print(ostream& os)const
 	{
 		Employee::print(os);
-		return os << "Тариф: " << rate << " $ ,отработано " << hours << " часов, зарплата : " << rate * hours << "$" << endl;
+		os.width(10);
+		os << rate;
+		os.width(10);
+		os << hours;
 		
+		 return os;
 	}
+	ofstream& print(ofstream& of)const
+	{
+		Employee::print(of);
+		of.width(10);
+		of << rate;
+		of.width(10);
+		of << hours;
+
+		return of;
+	}
+
 #ifdef FREND
 	friend ostream& operator << (ostream os, const HourlyEmpoloyee& obj)
 	{
@@ -312,17 +381,19 @@ std::ostream& operator << (std :: ostream& os, const Human& obj)
 {
 	return obj.print(os);
 }
-std::istream& operator >> (std::istream& in, const Human& obj)
+//std::istream& operator >> (std::istream& in, const Human& obj)
+//{
+//	const int size = 256;
+//	char buffer[size] = {};
+//	in.getline(buffer, size);
+//	return obj.input(in);
+//}
+
+
+ofstream& operator << (std::ofstream& of, const Human& obj)
 {
-	const int size = 256;
-	char buffer[size] = {};
-	char delimites[] = " ";
-	in.getline(buffer, size);
-	
-
-	return in;
+	return obj.print(of);
 }
-
 int main()
 {
 	SetConsoleCP(1251);
@@ -347,13 +418,11 @@ int main()
 	ofstream fout("file.txt");
 	for (size_t i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
-		//fout.width(30);
-		fout.left;
-		fout << string (typeid(*department[i]).name())+":\n" << " " << *department[i] << endl;
+		fout.width(30);
+		fout<<left;
+		fout << string(typeid(*department[i]).name()) + ": ";
+		fout << *department[i] << endl;
 	}
-	fout << "\n-----------------------------------------\n";
-	fout << "Общяя зарплата : " << total_salary << endl;
-
 	fout.close();
 	system("start notepad file.txt");
 	cout << "\n-----------------------------------------\n";
@@ -361,9 +430,9 @@ int main()
 	cout << "\n-----------------------------------------\n";
 	for (size_t i = 0; i < sizeof(department) / sizeof(Employee*); i++) 
 		delete department[i];
-	PermanentEmployee pe();
+	/*PermanentEmployee pe();
 	cout << "Введите информацию о сотруднике: ";
-	cin >> pe;
+	cin >> pe;*/
 
 
 

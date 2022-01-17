@@ -1,27 +1,3 @@
-class PermanentEmployee:
- --------------------------------
-Фамилия : Rosenberg
-Имя : Ken
-Возраст : 30 лет
-Должность : Lawyer
-Зарплата : 2000 $
-
-class PermanentEmployee:
- --------------------------------
-Фамилия : Diaz
-Имя : Rikardo
-Возраст : 30 лет
-Должность : Boss
-Зарплата : 50000 $
-
-class HourlyEmpoloyee:
- --------------------------------
-Фамилия : Vercetty
-Имя : Tomas
-Возраст : 30 лет
-Должность : Security
-Тариф: 100 $ ,отработано 8 часов, зарплата : 800$
-
-
------------------------------------------
-Общяя зарплата : 52800
+class PermanentEmployee:      Rosenberg           Ken       30 Lawyer                              2000 
+class PermanentEmployee:      Diaz                Rikardo   30 Boss                               50000 
+class HourlyEmpoloyee:        Vercetty            Tomas     30 Security            100       8         
