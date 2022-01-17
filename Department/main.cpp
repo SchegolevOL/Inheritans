@@ -1,8 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<Windows.h>
 #include<String>
 #include <cstring>
 #include<string.h>
+#include<fstream>
 
 using namespace std;
 using std::cout;
@@ -65,10 +67,31 @@ public:
 		cout << "HDestructor: " << this << endl;
 	}
 	//----------------Methods:--------------------
-	virtual void print()const
+	virtual ostream& print(ostream& os=cout)const
 	{
-		cout << last_name << " " << first_name << "  " << age << " лет" << endl;
+		//os.width(10);
+		os << left;
+		os << "--------------------------------\n";
+		os <<"Фамилия : "<< last_name << "\n";
+		//os.width(10);
+		os << "Имя : " << first_name<<"\n";
+		//os.width(3);
+		os << "Возраст : " << age << " лет\n";
+		return os;
+		
+		
 	}
+//	virtual istream& print(istream& in)const
+//	{
+//		/*const int size = 256;
+//		char buffer[size] = {};
+//		in.getline(buffer, size);*/
+//		in >> get_first_name;
+//		return in;
+//
+//
+//}
+
 #ifdef FREND
 	friend ostream& operator << (ostream os, const Human& obj)
 	{
@@ -76,21 +99,25 @@ public:
 	}
 #endif // FREND
 
-	virtual string txt()const
-	{
-		char* age_p;		
-		itoa(age, age_p, 10);
-		string age_s = (string)age_p;
-		//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-		char bufer[256];
-		
-		strcpy(bufer, first_name.c_str());
-		strcat(bufer, " ");
-		strcat(bufer, last_name.c_str());
-		strcat(bufer, age_s.c_str());
-		strcat(bufer, " лет\n");
-		return bufer;
-	}
+	//virtual string txt()const
+	//{
+	//	char* age_p;		
+	//	_itoa(age, age_p, 10);
+	//	string age_s = (string)age_p;
+	//	/*const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
+	//	char bufer[256];
+	//	
+	//	strcpy(bufer, first_name.c_str());
+	//	strcat(bufer, " ");
+	//	strcat(bufer, last_name.c_str());
+	//	strcat(bufer, age_s.c_str());
+	//	strcat(bufer, " лет\n");*/
+	//	string buffer;
+	//	buffer += first_name + " ";
+	//	buffer += last_name + " ";
+	//	buffer += std::to_string(age);
+	//	return buffer;
+	//}
 };
 
 
@@ -119,11 +146,11 @@ public:
 	{
 		cout << "EDestructor: " << this << endl;
 	}
-	void print()const
+	ostream&  print(ostream& os)const
 	{
-		Human::print();		
-		cout << position;
-		cout << endl;		
+		Human::print(os);		
+		os<< "Должность : " << position << endl;
+		return os;
 	}
 #ifdef FREND
 	friend ostream& operator << (ostream os, const Employee& obj)
@@ -133,17 +160,17 @@ public:
 	}
 #endif // FREND
 
-	string txt()const
-	{
-		Human::txt;
-		//const size_t size = position.length();
-		char bufer[256];
+	//string txt()const
+	//{
+	//	//Human::txt;
+	//	//const size_t size = position.length();
+	//	char bufer[256];
 
-		strcpy(bufer, position.c_str());
-		strcat(bufer, " \n");
-		
-		return bufer;
-	}
+	//	strcpy(bufer, position.c_str());
+	//	strcat(bufer, " \n");
+	//	
+	//	return bufer;
+	//}
 };
 
 
@@ -174,11 +201,11 @@ public:
 	{
 		cout << "PEDestructor: " << this << endl;
 	}
-	void print()const
+	ostream& print(ostream& os)const
 	{
-		Employee::print();
-		cout << salary;
-		cout << endl;
+		Employee::print(os);
+		return os << "Зарплата : " << salary <<" $" << endl;
+		 
 	}
 #ifdef FREND
 	friend ostream& operator << (ostream os, const PermanentEmployee& obj)
@@ -187,20 +214,20 @@ public:
 	}
 #endif // FREND
 	
-	string txt()const
-	{
-		Employee::txt;
-		char* salary_p;
-		itoa(salary, salary_p, 10);
-		string salary_s = (string)salary_p;
-		//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-		char bufer[256];
+	//string txt()const
+	//{
+	//	//Employee::txt;
+	//	char* salary_p;
+	//	_itoa(salary, salary_p, 10);
+	//	string salary_s = (string)salary_p;
+	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
+	//	char bufer[256];
 
-		strcpy(bufer, salary_s.c_str());
-		strcat(bufer, " рублей");
-		
-		return bufer;
-	}
+	//	strcpy(bufer, salary_s.c_str());
+	//	strcat(bufer, " рублей");
+	//	
+	//	return bufer;
+	//}
 
 };
 
@@ -246,11 +273,11 @@ public:
 	{
 		cout << "HEDestructor: " << this << endl;
 	}
-	void print()const
+	ostream& print(ostream& os)const
 	{
-		Employee::print();
-		cout <<"Тариф " << rate <<" ,отработано " << hours;
-		cout << endl;
+		Employee::print(os);
+		return os << "Тариф: " << rate << " $ ,отработано " << hours << " часов, зарплата : " << rate * hours << "$" << endl;
+		
 	}
 #ifdef FREND
 	friend ostream& operator << (ostream os, const HourlyEmpoloyee& obj)
@@ -259,30 +286,30 @@ public:
 	}
 #endif // FREND
 	
-	string txt()const
-	{
-		Employee::txt;
-		char* rate_p;
-		itoa(rate, rate_p, 10);
-		string rate_s = (string)rate_p;
-		char* hours_p;
-		itoa(hours, hours_p, 10);
-		string hours_s = (string)hours_p;
+	//string txt()const
+	//{
+	//	//Employee::txt;
+	//	char* rate_p;
+	//	_itoa(rate, rate_p, 10);
+	//	string rate_s = (string)rate_p;
+	//	char* hours_p;
+	//	_itoa(hours, hours_p, 10);
+	//	string hours_s = (string)hours_p;
 
-		//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-		char bufer[256];
+	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
+	//	char bufer[256];
 
-		strcpy(bufer, rate_s.c_str());
-		strcat(bufer, " рублей, отработано ");
-		strcat(bufer, hours_s.c_str());
-		
-		strcat(bufer, " часов\n");
-		return bufer;
-	}
+	//	strcpy(bufer, rate_s.c_str());
+	//	strcat(bufer, " рублей, отработано ");
+	//	strcat(bufer, hours_s.c_str());
+	//	
+	//	strcat(bufer, " часов\n");
+	//	return bufer;
+	//}
 };
-ostream& operator << (ostream os, const Human& obj)
+std::ostream& operator << (std :: ostream& os, const Human& obj)
 {
-	return os << obj.txt() << endl;
+	return obj.print(os);
 }
 
 
@@ -302,9 +329,23 @@ int main()
 	{
 		cout << "\n------------------------------------\n";
 		//department[i]->print();
-		cout << department[i] << endl;
+		cout << *department[i] << endl;
 		total_salary += department[i]->get_salary();
 	}
+
+	//работа с файлами
+	ofstream fout("file.txt");
+	for (size_t i = 0; i < sizeof(department) / sizeof(Employee*); i++)
+	{
+		//fout.width(30);
+		fout.left;
+		fout << string (typeid(*department[i]).name())+":\n" << " " << *department[i] << endl;
+	}
+	fout << "\n-----------------------------------------\n";
+	fout << "Общяя зарплата : " << total_salary << endl;
+
+	fout.close();
+	system("start notepad file.txt");
 	cout << "\n-----------------------------------------\n";
 	cout << "Общяя зарплата : " << total_salary << endl;
 	cout << "\n-----------------------------------------\n";
