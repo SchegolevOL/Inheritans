@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<Windows.h>
 #include<String>
@@ -61,6 +61,7 @@ public:
 		set_age(age);
 		cout << "HConstructor" << this << endl;
 	}
+
 	//-----------Destructor---------------------
 	virtual ~Human()
 	{
@@ -72,25 +73,23 @@ public:
 		//os.width(10);
 		os << left;
 		os << "--------------------------------\n";
-		os <<"Фамилия : "<< last_name << "\n";
+		os <<"Р¤Р°РјРёР»РёСЏ : "<< last_name << "\n";
 		//os.width(10);
-		os << "Имя : " << first_name<<"\n";
+		os << "РРјСЏ : " << first_name<<"\n";
 		//os.width(3);
-		os << "Возраст : " << age << " лет\n";
+		os << "Р’РѕР·СЂР°СЃС‚ : " << age << " Р»РµС‚\n";
 		return os;
 		
 		
 	}
-//	virtual istream& print(istream& in)const
-//	{
-//		/*const int size = 256;
-//		char buffer[size] = {};
-//		in.getline(buffer, size);*/
-//		in >> get_first_name;
-//		return in;
-//
-//
-//}
+	virtual istream& print(istream& in)const
+	{
+		
+		in.getline = get_first_name();
+		return in;
+
+
+	}
 
 #ifdef FREND
 	friend ostream& operator << (ostream os, const Human& obj)
@@ -111,7 +110,7 @@ public:
 	//	strcat(bufer, " ");
 	//	strcat(bufer, last_name.c_str());
 	//	strcat(bufer, age_s.c_str());
-	//	strcat(bufer, " лет\n");*/
+	//	strcat(bufer, " Р»РµС‚\n");*/
 	//	string buffer;
 	//	buffer += first_name + " ";
 	//	buffer += last_name + " ";
@@ -149,7 +148,7 @@ public:
 	ostream&  print(ostream& os)const
 	{
 		Human::print(os);		
-		os<< "Должность : " << position << endl;
+		os<< "Р”РѕР»Р¶РЅРѕСЃС‚СЊ : " << position << endl;
 		return os;
 	}
 #ifdef FREND
@@ -177,7 +176,7 @@ public:
 
 class PermanentEmployee : public Employee
 {
-	double salary;//зарплата
+	double salary;//Р·Р°СЂРїР»Р°С‚Р°
 public:
 	double get_salary()const
 	{
@@ -204,7 +203,7 @@ public:
 	ostream& print(ostream& os)const
 	{
 		Employee::print(os);
-		return os << "Зарплата : " << salary <<" $" << endl;
+		return os << "Р—Р°СЂРїР»Р°С‚Р° : " << salary <<" $" << endl;
 		 
 	}
 #ifdef FREND
@@ -224,7 +223,7 @@ public:
 	//	char bufer[256];
 
 	//	strcpy(bufer, salary_s.c_str());
-	//	strcat(bufer, " рублей");
+	//	strcat(bufer, " СЂСѓР±Р»РµР№");
 	//	
 	//	return bufer;
 	//}
@@ -235,8 +234,8 @@ public:
 
 class HourlyEmpoloyee :public Employee
 {
-	double rate;//тариф
-	int hours;//часы
+	double rate;//С‚Р°СЂРёС„
+	int hours;//С‡Р°СЃС‹
 public:
 	double  get_rate()const
 	{
@@ -268,6 +267,8 @@ public:
 		set_hours(hours);
 		cout << "PEConstructor" << this << endl;
 	}
+
+
 	//-----Destructor-----
 	~HourlyEmpoloyee()
 	{
@@ -276,7 +277,7 @@ public:
 	ostream& print(ostream& os)const
 	{
 		Employee::print(os);
-		return os << "Тариф: " << rate << " $ ,отработано " << hours << " часов, зарплата : " << rate * hours << "$" << endl;
+		return os << "РўР°СЂРёС„: " << rate << " $ ,РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ " << hours << " С‡Р°СЃРѕРІ, Р·Р°СЂРїР»Р°С‚Р° : " << rate * hours << "$" << endl;
 		
 	}
 #ifdef FREND
@@ -300,10 +301,10 @@ public:
 	//	char bufer[256];
 
 	//	strcpy(bufer, rate_s.c_str());
-	//	strcat(bufer, " рублей, отработано ");
+	//	strcat(bufer, " СЂСѓР±Р»РµР№, РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ ");
 	//	strcat(bufer, hours_s.c_str());
 	//	
-	//	strcat(bufer, " часов\n");
+	//	strcat(bufer, " С‡Р°СЃРѕРІ\n");
 	//	return bufer;
 	//}
 };
@@ -311,7 +312,16 @@ std::ostream& operator << (std :: ostream& os, const Human& obj)
 {
 	return obj.print(os);
 }
+std::istream& operator >> (std::istream& in, const Human& obj)
+{
+	const int size = 256;
+	char buffer[size] = {};
+	char delimites[] = " ";
+	in.getline(buffer, size);
+	
 
+	return in;
+}
 
 int main()
 {
@@ -333,7 +343,7 @@ int main()
 		total_salary += department[i]->get_salary();
 	}
 
-	//работа с файлами
+	//СЂР°Р±РѕС‚Р° СЃ С„Р°Р№Р»Р°РјРё
 	ofstream fout("file.txt");
 	for (size_t i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
@@ -342,16 +352,18 @@ int main()
 		fout << string (typeid(*department[i]).name())+":\n" << " " << *department[i] << endl;
 	}
 	fout << "\n-----------------------------------------\n";
-	fout << "Общяя зарплата : " << total_salary << endl;
+	fout << "РћР±С‰СЏСЏ Р·Р°СЂРїР»Р°С‚Р° : " << total_salary << endl;
 
 	fout.close();
 	system("start notepad file.txt");
 	cout << "\n-----------------------------------------\n";
-	cout << "Общяя зарплата : " << total_salary << endl;
+	cout << "РћР±С‰СЏСЏ Р·Р°СЂРїР»Р°С‚Р° : " << total_salary << endl;
 	cout << "\n-----------------------------------------\n";
 	for (size_t i = 0; i < sizeof(department) / sizeof(Employee*); i++) 
 		delete department[i];
-
+	PermanentEmployee pe();
+	cout << "Р’РІРµРґРёС‚Рµ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃРѕС‚СЂСѓРґРЅРёРєРµ: ";
+	cin >> pe;
 
 
 
