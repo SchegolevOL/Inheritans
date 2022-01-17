@@ -1,8 +1,8 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<Windows.h>
-#include<String>
-#include <cstring>
+#include<string>
+#include<cstring>
 #include<string.h>
 #include<fstream>
 
@@ -80,11 +80,9 @@ public:
 		os << age << " лет";
 		return os;
 		
-		
 	}
 	virtual ofstream& print(ofstream& of)const
-	{
-		
+	{		
 		of << left;
 		of.width(20);
 		of << last_name;
@@ -93,64 +91,23 @@ public:
 		of.width(3);
 		of << age;
 		return of;
-
-
 	}
-	
 
-	/*virtual istream& input(istream& in)const
+	virtual istream& input(istream& in)
 	{
-		const int size = 256;
-		char buffer[size] = {};
-		in.read(buffer, size);
-		char* number[3] = {};
-		int n = 0;		
-		for (char* pch = strtok(buffer, " "); pch; pch = strtok(NULL, " "))
-		{
-			number[n++] = pch;
-		}
-		
-		switch (n)
-		{
-		case 1:
-			get_last_name(string (number[0]));
-			break;
-		case 2:
-			
-			break;
-		case 3:
-			
-			break;
-		}
+		in >> last_name;
+		in >> first_name;
+		in >> age;
 		return in;
-	}*/
-
-#ifdef FREND
-	friend ostream& operator << (ostream os, const Human& obj)
-	{
-		return os << obj.get_last_name() << obj.get_first_name() << obj.get_age() << endl;
 	}
-#endif // FREND
 
-	//virtual string txt()const
-	//{
-	//	char* age_p;		
-	//	_itoa(age, age_p, 10);
-	//	string age_s = (string)age_p;
-	//	/*const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-	//	char bufer[256];
-	//	
-	//	strcpy(bufer, first_name.c_str());
-	//	strcat(bufer, " ");
-	//	strcat(bufer, last_name.c_str());
-	//	strcat(bufer, age_s.c_str());
-	//	strcat(bufer, " лет\n");*/
-	//	string buffer;
-	//	buffer += first_name + " ";
-	//	buffer += last_name + " ";
-	//	buffer += std::to_string(age);
-	//	return buffer;
-	//}
+	virtual ifstream& scan(ifstream& is)
+	{
+		is >> last_name >> first_name >> age;
+		return is;
+	}
+
+	
 };
 
 
@@ -194,25 +151,21 @@ public:
 		return of;
 	}
 
-#ifdef FREND
-	friend ostream& operator << (ostream os, const Employee& obj)
+	istream& input(istream& in)
 	{
-
-		return os << obj.get_position() << endl;
+		Human::input(in);
+		in >> position;
+		return in;
 	}
-#endif // FREND
 
-	//string txt()const
-	//{
-	//	//Human::txt;
-	//	//const size_t size = position.length();
-	//	char bufer[256];
+	ifstream& scan(ifstream& is)
+	{
+		Human::scan(is);
+		is >> position;
+		return is;
+	}
 
-	//	strcpy(bufer, position.c_str());
-	//	strcat(bufer, " \n");
-	//	
-	//	return bufer;
-	//}
+	
 };
 
 
@@ -260,28 +213,19 @@ public:
 		return of;
 	}
 
-#ifdef FREND
-	friend ostream& operator << (ostream os, const PermanentEmployee& obj)
+	istream& input(istream& in)
 	{
-		return os << obj.get_salary() << endl;
+		Employee::input(in);
+		in >> salary;
+		return in;
 	}
-#endif // FREND
-	
-	//string txt()const
-	//{
-	//	//Employee::txt;
-	//	char* salary_p;
-	//	_itoa(salary, salary_p, 10);
-	//	string salary_s = (string)salary_p;
-	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-	//	char bufer[256];
 
-	//	strcpy(bufer, salary_s.c_str());
-	//	strcat(bufer, " рублей");
-	//	
-	//	return bufer;
-	//}
-
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> salary;
+		return is;
+	}
 };
 
 
@@ -334,10 +278,10 @@ public:
 		os.width(10);
 		os << rate;
 		os.width(10);
-		os << hours;
-		
+		os << hours;		
 		 return os;
 	}
+
 	ofstream& print(ofstream& of)const
 	{
 		Employee::print(of);
@@ -345,59 +289,68 @@ public:
 		of << rate;
 		of.width(10);
 		of << hours;
-
 		return of;
 	}
 
-#ifdef FREND
-	friend ostream& operator << (ostream os, const HourlyEmpoloyee& obj)
+	istream& input(istream& in)
 	{
-		return os << obj.get_rate() << obj.get_hours() << endl;
+		Employee::input(in);
+		in >> rate;
+		in >> hours;
+		return in;
 	}
-#endif // FREND
+
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> rate >> hours;
+		return is;
+	}
+
+
 	
-	//string txt()const
-	//{
-	//	//Employee::txt;
-	//	char* rate_p;
-	//	_itoa(rate, rate_p, 10);
-	//	string rate_s = (string)rate_p;
-	//	char* hours_p;
-	//	_itoa(hours, hours_p, 10);
-	//	string hours_s = (string)hours_p;
-
-	//	//const size_t size = first_name.length() + last_name.length() + age_s.length()+3;
-	//	char bufer[256];
-
-	//	strcpy(bufer, rate_s.c_str());
-	//	strcat(bufer, " рублей, отработано ");
-	//	strcat(bufer, hours_s.c_str());
-	//	
-	//	strcat(bufer, " часов\n");
-	//	return bufer;
-	//}
 };
 std::ostream& operator << (std :: ostream& os, const Human& obj)
 {
 	return obj.print(os);
 }
-//std::istream& operator >> (std::istream& in, const Human& obj)
-//{
-//	const int size = 256;
-//	char buffer[size] = {};
-//	in.getline(buffer, size);
-//	return obj.input(in);
-//}
+std::istream& operator >> (std::istream& in, Human& obj)
+{
+	return obj.input(in);
+}
 
 
 ofstream& operator << (std::ofstream& of, const Human& obj)
 {
 	return obj.print(of);
 }
+ifstream& operator >>(ifstream& is, Human& obj)
+{	
+	return obj.scan(is);
+}
+
+Employee* EmployeeFactory(const string& type)
+{
+	if (type.find("PermanentEmployee")!=string::npos)//наличие в строке
+	{
+		return new PermanentEmployee("","",0,"",0);
+	}
+	if (type.find("HourlyEmpoloyee") != string::npos)
+	{
+		return new HourlyEmpoloyee("", "", 0, "", 0, 0);
+	}
+}
+
+//#define SAVE_TO_FILE
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
+#ifdef SAVE_TO_FILE
+
+
 
 	Employee* department[] =
 	{
@@ -433,9 +386,52 @@ int main()
 	/*PermanentEmployee pe();
 	cout << "Введите информацию о сотруднике: ";
 	cin >> pe;*/
+#endif // 
 
+	Employee** department = nullptr;
+	int n = 0;//
+	ifstream fin("file.txt");
 
+	if (fin.is_open())
+	{
+		string employee_type;
+		
+		for(; !fin.eof(); n++)
+		{
+			getline(fin, employee_type);
+		}
+		n--;
+		cout << n<<endl;
+		department = new Employee * [n] {};
+		//возвращаем курсор в начало файла
+		cout << fin.tellg() << endl;
+		fin.clear();//очищаем поток
+		fin.seekg(0);//задаем расположение курсора
+		cout << fin.tellg() << endl;
+		//загружаем данне из файла в массив
+		for (size_t i = 0; i < n; i++)
+		{
+			getline(fin, employee_type, ':');//чтение строки до пробела
+			department[i] = EmployeeFactory(employee_type);
+			fin >> *department[i];
+		}
+	}
 
+	else
+	{
+		cerr << "Erorr: file non found" << endl;
+	}
 
+	for (size_t i = 0; i < n; i++)
+	{
+		cout << *department[i]<<endl;
+	}
+
+	for (size_t i = 0; i < n; i++)
+	{
+		delete department[i];
+	}
+	delete[] department;
+	fin.close();
 	return 0;
 }
