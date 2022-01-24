@@ -14,7 +14,6 @@ class GroundVehicle : private Vehicle
 {
 
 };
-
 class Car : GroundVehicle
 {
 public:
@@ -23,7 +22,6 @@ public:
 		cout << "Машина едит на 4 колесах" << endl;
 	}
 };
-
 class Bike:GroundVehicle
 {
 public:
@@ -36,7 +34,6 @@ public:
 class FloatTransport:Vehicle
 {
 };
-
 class Speedboat :FloatTransport
 {
 public:
@@ -45,7 +42,6 @@ public:
 		cout << "Катер плывет" << endl;
 	}
 };
-
 class Yacht : FloatTransport
 {
 public:
@@ -54,11 +50,8 @@ public:
 		cout << "Яхта плывет" << endl;
 	}
 };
-class FlyTransport
-{
-
-};
-class Plane : FloatTransport
+class FlyTransport{};
+class Plane : FlyTransport
 {
 public:
 	void move()
@@ -66,7 +59,7 @@ public:
 		cout << "Самолет летает" << endl;
 	}
 };
-class Helicopter : FloatTransport
+class Helicopter : FlyTransport
 {
 public:
 	void move()
