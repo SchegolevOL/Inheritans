@@ -3,7 +3,7 @@
   <Class Name="Human">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAQQCAAAAMAAAAAAAAAAAABEAAAAyAQAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAQQCAAAAMAAAAAAAAABAABEAAAAyEQAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
@@ -15,7 +15,7 @@
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAACAAAAAAIAAACAAAAAAABgAAAAIAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAACAAAAAAIAAACAAAABAABgAAAAIEAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
@@ -33,25 +33,19 @@
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAgAEAAgAAAAAAAAAAAgAAABAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAgAEAAgAAAAAAAAAAAgBAABAAAAAAEAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HourlyEmpoloyee">
-    <Position X="6" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Employee" ManuallyRouted="true" FixedFromPoint="true">
-      <Path>
-        <Point X="3.312" Y="0.5" />
-        <Point X="3.312" Y="0.146" />
-        <Point X="6.75" Y="0.146" />
-        <Point X="6.75" Y="3.723" />
-      </Path>
+    <Position X="6.75" Y="3" Width="1.5" />
+    <InheritanceLine Type="Employee">
       <InheritanceModifierLabel ManuallyPlaced="true">
         <Position X="0.6" Y="-1.471" />
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAEFAAAQAAAAAAAAAAAAAEgEAAAEAABAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAEFAAAQAAAAAAAAAAAAAEgEAAAFAABAAAAAAEAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>

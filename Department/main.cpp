@@ -329,7 +329,7 @@ ifstream& operator >>(ifstream& is, Human& obj)
 	return obj.scan(is);
 }
 
-Employee* EmployeeFactory(const string& type)
+Employee* HumanFactory(const string& type)
 {
 	if (type.find("PermanentEmployee")!=string::npos)//наличие в строке
 	{
@@ -341,8 +341,8 @@ Employee* EmployeeFactory(const string& type)
 	}
 }
 
-//#define SAVE_TO_FILE
-
+#define SAVE_TO_FILE
+//#define READ_OF_FILE
 int main()
 {
 	SetConsoleCP(1251);
@@ -387,6 +387,8 @@ int main()
 	cout << "Введите информацию о сотруднике: ";
 	cin >> pe;*/
 #endif // 
+#ifdef READ_OF_FILE
+
 
 	Employee** department = nullptr;
 	int n = 0;//
@@ -433,5 +435,7 @@ int main()
 	}
 	delete[] department;
 	fin.close();
+#endif // READ_OF_FILE
+
 	return 0;
 }
