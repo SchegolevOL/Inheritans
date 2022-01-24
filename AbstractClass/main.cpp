@@ -50,7 +50,9 @@ public:
 		cout << "Яхта плывет" << endl;
 	}
 };
-class FlyTransport{};
+class FlyTransport : Vehicle 
+{
+};
 class Plane : FlyTransport
 {
 public:
