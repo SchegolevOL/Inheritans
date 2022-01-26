@@ -354,7 +354,7 @@ int main()
 	ell.draw();
 	cout << "\n\n\n\n";
 
-	Triangl tri(Color::blue, 300, 220, 300, 240, 340, 240, 5);
+	Triangl tri(Color::blue, 300, 220, 300, 240, 340, 240, 10);
 	cout << tri.get_perimeter() << endl;
 	cout << tri.get_area() << endl;
 	tri.draw();

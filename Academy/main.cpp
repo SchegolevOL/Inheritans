@@ -341,10 +341,10 @@ ifstream& operator >>(ifstream& is, Human& obj)
 }
 Human* HumanFactory(const string& type)
 {
-	Human* human;
-	if (type.find("Graduate") != string::npos)//наличие в строке
+	Human* human{};
+	if (type.find("Graduate") != string::npos)
 	{
-		 human = new Graduate("", "", 0, "", "", 0, 0, "");
+		human = new Graduate("", "", 0, "", "", 0, 0, "");
 	}
 	if (type.find("Student") != string::npos)
 	{
@@ -353,10 +353,6 @@ Human* HumanFactory(const string& type)
 	if (type.find("Teacher") != string::npos)
 	{
 		human =  new Teacher("", "", 0, "", 0, 0);
-	}
-	if (type.find("Human") != string::npos)
-	{
-		human = new Human("", "", 0);
 	}
 	return human;
 }
@@ -389,6 +385,9 @@ int main()
 		new Student("Sara", "Conar", 40, "Chmistry", "WW_145", 84, 96),
 		new Graduate("Kol", "Kolotun", 25, "Chmistry", "WW_456", 96, 100, "ingenering")
 	};
+
+
+
 	cout << "\n------------------------------------------" << endl;
 	for (size_t i = 0; i < sizeof(group)/sizeof(Human*); i++)
 	{
@@ -400,11 +399,33 @@ int main()
 	{
 		delete group[i];
 	}
-	Student s1(" ", " ", 0, " ", " ", 0, 0);
+	/*Student s1(" ", " ", 0, " ", " ", 0, 0);
 	cin >> s1;
-	cout << s1;
+	cout << s1;*/
 
-	Human** department = nullptr;
+
+	
+	
+	ofstream fout("file.txt");
+	for (size_t i = 0; i < sizeof(group) / sizeof(Human*); i++)
+	{
+		fout.width(30);
+		fout << left;
+		fout << string(typeid(*group[i]).name()) + ": ";
+		fout << *group[i] << endl;
+	}
+	fout.close();
+	system("start notepad file.txt");
+	
+	for (size_t i = 0; i < sizeof(group) / sizeof(Human*); i++)
+		delete group[i];
+
+
+
+
+
+
+	Human** group2 = nullptr;
 	int n = 0;
 	ifstream fin("file.txt");
 
@@ -418,7 +439,7 @@ int main()
 		}
 		n--;
 		cout << n << endl;
-		department = new Human * [n] {};
+		group2 = new Human * [n] {};
 		//возвращаем курсор в начало файла
 		cout << fin.tellg() << endl;
 		fin.clear();//очищаем поток
@@ -428,8 +449,8 @@ int main()
 		for (size_t i = 0; i < n; i++)
 		{
 			getline(fin, employee_type, ':');//чтение строки до пробела
-			department[i] = HumanFactory(employee_type);
-			fin >> *department[i];
+			group2[i] = HumanFactory(employee_type);
+			fin >> *group2[i];
 		}
 		fin.close();
 
@@ -442,14 +463,30 @@ int main()
 
 	for (size_t i = 0; i < n; i++)
 	{
-		cout << *department[i] << endl;
+		cout << *group2[i] << endl;
 	}
 
-	for (size_t i = 0; i < n; i++)
+
+
+	cout << "\n------------------------------------------" << endl;
+	for (size_t i = 0; i < sizeof(group2)/sizeof(Human*); i++)
 	{
-		delete department[i];
+		cout << typeid(*group2[i]).name() << endl;//TRRI - Runtime
+		cout << *group2[i];
+		cout << "\n------------------------------------------"<<endl;
 	}
-	delete[] department;
+	for (size_t i = 0; i < sizeof(group2) / sizeof(Human*); i++)
+	{
+		delete group2[i];
+	}
+	
+
+
+
+
+
+
+	delete[] group2;
 	
 
 
