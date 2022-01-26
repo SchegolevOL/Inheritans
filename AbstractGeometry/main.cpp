@@ -318,14 +318,13 @@ public:
 	void draw()const
 	{
 		POINT point [3] = {a, b, c};
-		POINT* p = point;
 		HWND hConsole = GetConsoleWindow();//получаем окно консоли чтобы к нему можно было обратиться
 		HDC hdc = GetDC(hConsole);
 		HPEN hPen = CreatePen(PS_SOLID, line_width, color);//color=RBG(255,0,0)
 		SelectObject(hdc, hPen);
 		HBRUSH hBrysh = CreateSolidBrush(color);
 		SelectObject(hdc, hBrysh);
-		Polygon(hdc, p, 3);
+		Polygon(hdc, point, 3);
 		DeleteObject(hBrysh);
 		DeleteObject(hPen);
 		ReleaseDC(hConsole, hdc);
