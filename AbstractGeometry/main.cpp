@@ -430,16 +430,12 @@ namespace Geometry
 
 		double get_perimeter()const
 		{
-			return  triangl_side(a.x, a.y, b.x, b.y) +
-				triangl_side(a.x, a.y, c.x, c.y) +
-				triangl_side(b.x, b.y, c.x, c.y);
+			return  get_sideAB()+get_sideAC()+get_sideBC();
 		}
 		double get_area()const
 		{
 			double p = get_perimeter() / 2;
-			return sqrt(p * (p - triangl_side(a.x, a.y, b.x, b.y)) *
-				(p - triangl_side(a.x, a.y, c.x, c.y)) *
-				(p - triangl_side(b.x, b.y, c.x, c.y)));
+			return sqrt(p * (p - get_sideAB()) * (p - get_sideAC()) * (p - get_sideBC()));
 		}
 
 
@@ -536,7 +532,6 @@ namespace Geometry
 			unsigned int start_y,
 			double side1,
 			double side2,
-
 			unsigned int line_width)
 		{
 			this->color = color;
@@ -545,7 +540,7 @@ namespace Geometry
 			this->line_width = line_width;
 			set_side_AB(side1);
 			set_side_AC(side2);
-			set_side_BC(sqrt(pow(side1, 2) + pow(side2, 2)));
+			set_side_BC(sqrt(pow(get_sideAB(), 2) + pow(get_sideAC(), 2)));
 			set_point_a(start_x, start_y);
 			set_point_b(start_x, start_y + get_sideAB());
 			set_point_c(start_x + get_sideAC(), start_y + get_sideAB());
@@ -577,7 +572,7 @@ int main()
 	Geometry::IsoscalesTriangle tri_I(Geometry::Color::red, 350, 400, 50, 80, 1);
 	tri_I.info();
 	cout << "--------------------------" << endl;
-	Geometry::RightTriangle tri_R(Geometry::Color::red, 350, 500, 50, 20, 1);
+	Geometry::RightTriangle tri_R(Geometry::Color::red, 350, 500, 50, 50, 1);
 	tri_R.info();
 
 
