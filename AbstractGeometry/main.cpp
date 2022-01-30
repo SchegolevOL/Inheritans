@@ -285,9 +285,9 @@ namespace Geometry
 		POINT a;
 		POINT b;
 		POINT c;
-		unsigned int side_AB;
-		unsigned int side_AC;
-		unsigned int side_BC;
+		double side_AB;
+		double side_AC;
+		double side_BC;
 		double angle_ABC;
 		double angle_ACB;
 		double angle_BAC;
@@ -306,15 +306,15 @@ namespace Geometry
 		{
 			return c;
 		}
-		unsigned int get_sideAB()const
+		double get_sideAB()const
 		{
 			return side_AB;
 		}
-		unsigned int get_sideAC()const
+		double get_sideAC()const
 		{
 			return side_AC;
 		}
-		unsigned int get_sideBC()const
+		double get_sideBC()const
 		{
 			return side_BC;
 		}
@@ -346,15 +346,15 @@ namespace Geometry
 			c.x = x;
 			c.y = y;
 		}
-		void set_side_AC(unsigned int side_AC)
+		void set_side_AC(double side_AC)
 		{
 			this->side_AC = side_AC;
 		}
-		void set_side_BC(unsigned int side_BC)
+		void set_side_BC(double side_BC)
 		{
 			this->side_BC = side_BC;
 		}
-		void set_side_AB(unsigned int side_AB)
+		void set_side_AB(double side_AB)
 		{
 			this->side_AB = side_AB;
 		}
@@ -371,7 +371,7 @@ namespace Geometry
 			this->angle_BAC = angle_BAC;
 		}
 		//-----metods-------
-		unsigned int triangl_side(int a_x, int a_y, int b_x, int b_y)const
+		double triangl_side(int a_x, int a_y, int b_x, int b_y)const
 		{
 			return sqrt(pow((a_x - b_x), 2) + pow((a_y - b_y), 2));
 		}
@@ -476,7 +476,7 @@ namespace Geometry
 			Color color,
 			unsigned int start_x,
 			unsigned int start_y,
-			unsigned int side,
+			double side,
 			unsigned int line_width)
 		{
 			this->color = color;
@@ -499,15 +499,15 @@ namespace Geometry
 	};
 	class IsoscalesTriangle : public Triangl
 	{
-		
+
 	public:
 		
 		IsoscalesTriangle(
 			Color color,
 			unsigned int start_x,
 			unsigned int start_y,
-			unsigned int side,
-			unsigned int base,
+			double side,
+			double base,
 			unsigned int line_width)
 		{
 			this->color = color;
@@ -526,7 +526,35 @@ namespace Geometry
 		}
 		~IsoscalesTriangle() {}
 	};
+	class RightTriangle : public Triangl
+	{
+	public:
 
+		RightTriangle(
+			Color color,
+			unsigned int start_x,
+			unsigned int start_y,
+			double side1,
+			double side2,
+
+			unsigned int line_width)
+		{
+			this->color = color;
+			this->start_x = start_x;
+			this->start_y = start_y;
+			this->line_width = line_width;
+			set_side_AB(side1);
+			set_side_AC(side2);
+			set_side_BC(sqrt(pow(side1, 2) + pow(side2, 2)));
+			set_point_a(start_x, start_y);
+			set_point_b(start_x, start_y + get_sideAB());
+			set_point_c(start_x + get_sideAC(), start_y + get_sideAB());
+			set_angle_BAC(triangl_angle(get_sideAB(),get_sideBC(),get_sideAC()));
+			set_angle_ABC(M_PI / 2);
+			set_angle_ACB(triangl_angle(get_sideAC(), get_sideBC(), get_sideAB()));
+		}
+		~RightTriangle() {}
+	};
 }
 
 int main()
@@ -548,9 +576,9 @@ int main()
 	cout << "--------------------------" << endl;
 	Geometry::IsoscalesTriangle tri_I(Geometry::Color::red, 350, 400, 50, 80, 1);
 	tri_I.info();
-
-
-
+	cout << "--------------------------" << endl;
+	Geometry::RightTriangle tri_R(Geometry::Color::red, 350, 500, 50, 20, 1);
+	tri_R.info();
 
 
 
