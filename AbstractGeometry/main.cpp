@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <string>
 #include <math.h>
+
 using namespace std;
 
 
@@ -284,64 +285,132 @@ namespace Geometry
 		POINT a;
 		POINT b;
 		POINT c;
+		unsigned int side_AB;
+		unsigned int side_AC;
+		unsigned int side_BC;
+		double angle_ABC;
+		double angle_ACB;
+		double angle_BAC;
 	public:
+
+		//------get---------
 		POINT get_point_a()const
 		{
 			return a;
 		}
+		POINT get_point_b()const
+		{
+			return b;
+		}
+		POINT get_point_c()const
+		{
+			return c;
+		}
+		unsigned int get_sideAB()const
+		{
+			return side_AB;
+		}
+		unsigned int get_sideAC()const
+		{
+			return side_AC;
+		}
+		unsigned int get_sideBC()const
+		{
+			return side_BC;
+		}
+		double get_angle_ABC()const
+		{
+			return angle_ABC;
+		}
+		double get_angle_ACB()const
+		{
+			return angle_ACB;
+		}
+		double get_angle_BAC()const
+		{
+			return angle_BAC;
+		}
+		//------set------
 		void set_point_a(int x, int y)
 		{
 			a.x = x;
 			a.y = y;
-		}
-
-		POINT get_point_b()const
-		{
-			return b;
 		}
 		void set_point_b(int x, int y)
 		{
 			b.x = x;
 			b.y = y;
 		}
-
-		POINT get_point_c()const
-		{
-			return c;
-		}
 		void set_point_c(int x, int y)
 		{
 			c.x = x;
 			c.y = y;
 		}
-
-		double triangl_side(int a_x, int a_y, int b_x, int b_y)const
+		void set_side_AC(unsigned int side_AC)
+		{
+			this->side_AC = side_AC;
+		}
+		void set_side_BC(unsigned int side_BC)
+		{
+			this->side_BC = side_BC;
+		}
+		void set_side_AB(unsigned int side_AB)
+		{
+			this->side_AB = side_AB;
+		}
+		void set_angle_ABC(double angle_ABC)
+		{
+			this->angle_ABC = angle_ABC;
+		}
+		void set_angle_ACB(double angle_ACB)
+		{
+			this->angle_ACB = angle_ACB;
+		}
+		void set_angle_BAC(double angle_BAC)
+		{
+			this->angle_BAC = angle_BAC;
+		}
+		//-----metods-------
+		unsigned int triangl_side(int a_x, int a_y, int b_x, int b_y)const
 		{
 			return sqrt(pow((a_x - b_x), 2) + pow((a_y - b_y), 2));
 		}
+		
+		double triangl_angle(unsigned int side_AB, unsigned int side_AC, unsigned int side_BC)const
+		{
+			double a = acos((pow(side_AB, 2) + pow(side_AC, 2) - pow(side_BC, 2)) / (2 * side_AB * side_AC));
+			return a;
+		}
+
+		//-----Constructor-----
 
 		Triangl(
 			Color color,
 			unsigned int start_x,
 			unsigned int start_y,
-			int point_b_x,
-			int point_b_y,
-			int point_c_x,
-			int point_c_y,
+			unsigned int point_b_x,
+			unsigned int point_b_y,
+			unsigned int point_c_x,
+			unsigned int point_c_y,
 			unsigned int line_width) :Shape(color, start_x, start_y, line_width)
 		{
 			set_point_a(start_x, start_y);
 			set_point_b(point_b_x, point_b_y);
 			set_point_c(point_c_x, point_c_y);
-
+			side_AB = triangl_side(start_x, start_y, point_b_x, point_b_y);
+			side_AC = triangl_side(start_x, start_y, point_c_x, point_c_y);
+			side_BC = triangl_side(point_b_x, point_b_y, point_c_x, point_c_y);
+			angle_BAC = triangl_angle(side_AB, side_AC, side_BC);
+			angle_ABC = triangl_angle(side_AB, side_BC, side_AC);
+			angle_ACB = triangl_angle(side_AC, side_BC, side_AB);
 		}
-		Triangl()
+		Triangl()//defaut constructor
 		{
 			set_point_a(0, 0);
 			set_point_b(0, 0);
 			set_point_c(0, 0);
 		}
-		Triangl(
+		/*Triangl(
 			Color color,
 			unsigned int start_x,
 			unsigned int start_y,
@@ -355,8 +424,8 @@ namespace Geometry
 			set_point_b(start_x + a, start_y);
 			set_point_c(start_x+sin(a_b)*b, start_y + b+sin(M_PI/2-a_b)*b );
 
-		}
-
+		}*/
+		//-----destructor-----
 		~Triangl() {}
 
 		double get_perimeter()const
@@ -391,25 +460,18 @@ namespace Geometry
 		virtual void info()const
 		{
 			cout << typeid(*this).name() << endl;
-			cout << "Сторона a :\t" << triangl_side(a.x, a.y, b.x, b.y) << endl;
-			cout << "Сторона b :\t" << triangl_side(a.x, a.y, c.x, c.y) << endl;
-			cout << "Сторона c :\t" << triangl_side(b.x, b.y, c.x, c.y) << endl;
+			cout << "Сторона AB :\t" << get_sideAB() << endl;
+			cout << "Сторона AC :\t" << get_sideAC() << endl;
+			cout << "Сторона BC :\t" << get_sideBC() << endl;
+			cout << "Угол ABC: \t" << angle_ABC * 180 / M_PI << endl;
+			cout << "Угол BAC: \t" << angle_BAC * 180 / M_PI << endl;
+			cout << "Угол ACB: \t" << angle_ACB * 180 / M_PI << endl;
 			Shape::info();
 		}
 	};
 	class EquilateralTriangle: public Triangl
 	{
-		double side;
 	public:
-		double get_side()const
-		{
-			return side;
-		}
-		void set_side(double side)
-		{
-			if (side <= 0)side = 1;
-			this->side = side;
-		}
 		EquilateralTriangle(
 			Color color,
 			unsigned int start_x,
@@ -421,51 +483,77 @@ namespace Geometry
 			this->start_x = start_x;
 			this->start_y = start_y;
 			this->line_width = line_width;
-			
+			set_side_AB(side);
+			set_side_AC(side);
+			set_side_BC(side);
 			set_point_a(start_x, start_y);
 			set_point_b(start_x + side, start_y);
 			set_point_c(start_x +side - sin(M_PI/6) * side, start_y  + sin(M_PI / 3) * side);
+			set_angle_BAC (triangl_angle(side, side, side));
+			set_angle_ABC (triangl_angle(side, side, side));
+			set_angle_ACB (triangl_angle(side, side, side));
 
 		}
 
 		~EquilateralTriangle() {}
-
-
-
-
-
-
-
-
+	};
+	class IsoscalesTriangle : public Triangl
+	{
+		
+	public:
+		
+		IsoscalesTriangle(
+			Color color,
+			unsigned int start_x,
+			unsigned int start_y,
+			unsigned int side,
+			unsigned int base,
+			unsigned int line_width)
+		{
+			this->color = color;
+			this->start_x = start_x;
+			this->start_y = start_y;
+			this->line_width = line_width;
+			set_side_AB(side);
+			set_side_AC(side);
+			set_side_BC(base);
+			set_point_a(start_x, start_y);
+			set_point_b(start_x + base / 2, start_y + sqrt(pow(side, 2) - pow(base / 2, 2)));
+			set_point_c(start_x - base / 2, start_y + sqrt(pow(side, 2) - pow(base / 2, 2)));
+			set_angle_BAC(triangl_angle(side, side, base));
+			set_angle_ABC(triangl_angle(side, base, side));
+			set_angle_ACB(triangl_angle(base, side, side));
+		}
+		~IsoscalesTriangle() {}
 	};
 
-
-
-
-
-
-
-
-
-
 }
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	Geometry::Square sq(50, Geometry::Color::blue,300,20,5);
+	/*Geometry::Square sq(50, Geometry::Color::blue,300,20,5);
 	sq.info();
 	Geometry::Rectangle rt(100, 50, Geometry::Color::green, 300, 80, 5);
 	rt.info();
 	Geometry::Ellips ell(25, Geometry::Color::red, 300, 140, 5);
-	ell.info();
-	Geometry::Triangl tri(Geometry::Color::blue, 300, 200, 300, 240, 340, 240, 1);
+	ell.info();*/
+	Geometry::Triangl tri(Geometry::Color::blue, 350, 20, 320, 20, 300, 40, 1);
 	tri.info();
-	/*Geometry::Triangl tri1(Geometry::Color::blue, 300, 260, 30, 30, M_PI/2, 1);
-	tri1.info();*/
-	Geometry::EquilateralTriangle triR(Geometry::Color::blue, 300, 300, 50, 1);
-	triR.info();
+	cout << "--------------------------" << endl;
+	Geometry::EquilateralTriangle tri_E(Geometry::Color::red, 350, 200, 50, 1);
+	tri_E.info();
+	cout << "--------------------------" << endl;
+	Geometry::IsoscalesTriangle tri_I(Geometry::Color::red, 350, 400, 50, 80, 1);
+	tri_I.info();
+
+
+
+
+
+
 	/*cout << endl;
 	cout << "Ширина :\t" << rec.get_width() << endl;
 	cout << "Высота :\t" << rec.get_height() << endl;
